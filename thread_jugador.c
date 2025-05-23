@@ -1,17 +1,18 @@
-#include "thread_jugador.h"
-#include "global.h"
+#include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <pthread.h>
 #include "def.h"
+#include "thread_jugador.h"
+#include "global.h"
 
 void *thread_jugador(void *arg)
 {
     ThreadArgs *args = (ThreadArgs *)arg;
-    int numero_pensado;
     int tiempo_espera;
     int numeros_ya_pensados[100] = {0};
     int cantidad_numeros_ya_pensados = 0;
-    int i, j;
+    int i;
 
     while (1)
     {
@@ -31,31 +32,37 @@ void *thread_jugador(void *arg)
         usleep(tiempo_espera * 1000);
 
         /* genero un numero aleatorio*/
-        numero_pensado = rand() % (NUM_MAX - NUM_MIN + 1) + NUM_MIN;
+        args->numero_pensado_jugador = rand() % (NUM_MAX - NUM_MIN + 1) + NUM_MIN;
+        args->intentos++;
+        printf("║  Jugador %d pensó en el número %d    ║\n", args->id_jugador, args->numero_pensado_jugador);
 
         for (i = 0; i <= cantidad_numeros_ya_pensados; i++)
         {
-            if (numeros_ya_pensados[i] == numero_pensado)
-            {
+            if (numeros_ya_pensados[i] == args->numero_pensado_jugador)
+            {   
+                printf("Ups, ya habia pensado ese numero, lo vuelvo a pensar!\n");
 
                 /* simulo que tarda en pensar*/
                 tiempo_espera = (rand() % (TIEMPO_MAX - TIEMPO_MIN + 1)) + TIEMPO_MIN;
                 usleep(tiempo_espera * 1000);
 
                 /* genero un numero aleatorio*/
-                numero_pensado = rand() % (NUM_MAX - NUM_MIN + 1) + NUM_MIN;
+                args->numero_pensado_jugador = rand() % (NUM_MAX - NUM_MIN + 1) + NUM_MIN;
+                args->intentos++;
+                printf("║  Jugador %d pensó en el número %d    ║\n", args->id_jugador, args->numero_pensado_jugador);
 
                 i = 0;
             }
         }
 
-        numeros_ya_pensados[j] = numero_pensado;
+        numeros_ya_pensados[cantidad_numeros_ya_pensados] = args->numero_pensado_jugador;
         cantidad_numeros_ya_pensados++;
 
         pthread_mutex_lock(&mutex);
         /* analizo si el numero pensado coincide con el pasado por argumento y termino el thread*/
-        if (numero_pensado == args->numero_pensado)
+        if (args->numero_pensado_jugador == args->numero_pensado_pensador)
         {
+            printf("║  Jugador %d acertó el número %d    ║\n", args->id_jugador, args->numero_pensado_jugador);
             *(args->alguien_acerto) = 1;
             pthread_mutex_unlock(&mutex);
             break;

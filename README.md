@@ -1,0 +1,1 @@
+Ejecutar el comando 'make all' y correr "./pensador n". Siendo n la cantidad de jugadores que van a jugar.

@@ -10,18 +10,17 @@ int main(int argc, char *argv[]){
     int alguien_acerto=0;
     int numero_pensado;
     int i;
+    int numero;
     pthread_t *idHilo;
     pthread_attr_t atributos;
     ThreadArgs *args;
-    int numeros_ya_pensados[100] = {0};  // Array de enteros
-
     
     if(argc != 2) {
         printf("Error: Debes ingresar un número como argumento\n");
         return 1;
     }
     
-    int numero = atoi(argv[1]);
+    numero = atoi(argv[1]);
     printf("╔════════════════════════════════════════╗\n");
     printf("║        INICIO DEL JUEGO                ║\n");
     printf("║  Jugadores registrados: %d             ║\n", numero);
@@ -42,8 +41,11 @@ int main(int argc, char *argv[]){
 
     args = (ThreadArgs *)malloc(sizeof(ThreadArgs) * numero);
     for(i=0; i<numero; i++){
-        args[i].numero_pensado = numero_pensado;
+        args[i].numero_pensado_pensador = numero_pensado;
         args[i].alguien_acerto = &alguien_acerto;
+        args[i].numero_pensado_jugador = 0;
+        args[i].id_jugador = i;
+        args[i].intentos = 0;
     }
 
     /* Inicio mutex */
@@ -60,7 +62,11 @@ int main(int argc, char *argv[]){
     }
 
     for (i=0; i<numero; i++){
-        if (args[i].numero_pensado == numero_pensado){
+        printf("║  Jugador %d intentó %d veces    ║\n", i, args[i].intentos);
+    }
+    
+    for (i=0; i<numero; i++){
+        if (args[i].numero_pensado_jugador == numero_pensado){
             printf("╔════════════════════════════════════════╗\n");
             printf("║           ¡JUGADOR GANADOR!            ║\n");
             printf("║      Jugador %d acertó el número %d    ║\n", i, numero_pensado);
