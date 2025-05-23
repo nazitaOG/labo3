@@ -10,6 +10,7 @@
 #define TIEMPO_MAX 5000
 
 
+
 typedef struct {
     long long_dest;
     int int_rte;
