@@ -10,7 +10,7 @@ void *thread_jugador(void *arg)
 {
     ThreadArgs *args = (ThreadArgs *)arg;
     int tiempo_espera;
-    int numeros_ya_pensados[100] = {0};
+    int numeros_ya_pensados[NUM_MAX] = {0};
     int cantidad_numeros_ya_pensados = 0;
     int i;
 
@@ -59,11 +59,16 @@ void *thread_jugador(void *arg)
         cantidad_numeros_ya_pensados++;
 
         pthread_mutex_lock(&mutex);
-        /* analizo si el numero pensado coincide con el pasado por argumento y termino el thread*/
-        if (args->numero_pensado_jugador == args->numero_pensado_pensador)
+        if (*(args->alguien_acerto) == 0 && args->numero_pensado_jugador == args->numero_pensado_pensador)
         {
             printf("║  Jugador %d acertó el número %d    ║\n", args->id_jugador, args->numero_pensado_jugador);
             *(args->alguien_acerto) = 1;
+            pthread_mutex_unlock(&mutex);
+            break;
+        }
+        if(*(args->alguien_acerto) == 1 && args->numero_pensado_jugador == args->numero_pensado_pensador){
+            printf("Otro jugador ya acerto el numero, el numero del jugador %d no va ser validado\n", args->id_jugador);
+            args->numero_pensado_jugador = -1;
             pthread_mutex_unlock(&mutex);
             break;
         }
