@@ -1,9 +1,9 @@
 CC = gcc-4.1
 CFLAGS = -pedantic-errors -Wall -O3 -std=gnu89 -pthread
 PHEADER = -I./
-MISC = global.c thread_jugador.c
-MISH = def.h global.h thread_jugador.h
-PROG1 = pensador
+MISC = global.c thread_jugador_bingo.c
+MISH = def.h global.h thread_jugador_bingo.h
+PROG1 = bingo
 
 all: clean prog1
 
