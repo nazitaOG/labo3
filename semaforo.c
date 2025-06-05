@@ -21,7 +21,7 @@ void iniciarSemaforo(int valor){
     semctl(semaforo, 0, SETVAL, valor);
 }
 
-void levantaSemaforo(){
+void levantarSemaforo(){
     struct sembuf operacion;
     operacion.sem_num = 0;
     operacion.sem_op = 1;
@@ -29,7 +29,7 @@ void levantaSemaforo(){
     semop(semaforo, &operacion, 1);
 }
 
-void esperaSemaforo(){
+void esperarSemaforo(){
     struct sembuf operacion;
     operacion.sem_num = 0;
     operacion.sem_op = -1;

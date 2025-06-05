@@ -1,6 +1,8 @@
 #ifndef _MEMORIA
 #define _MEMORIA
 
-void *creoMemoria(int size,int *r_id_memoria);
+void *crearMemoria(int size);
+void desasociarMemoria(char *memoria);
+void destruirMemoria();
 
 #endif

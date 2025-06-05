@@ -4,16 +4,7 @@
 #define TRUE 1
 #define FALSE 0
 #define LARGO_BUFFER 50
-#define NUMERO_MINIMO 1
-#define NUMERO_MAXIMO 10
-#define TIEMPO_MIN 500
-#define TIEMPO_MAX 5000
-
-typedef struct {
-    long long_dest;
-    int int_rte;
-    int int_evento;
-    char char_mensaje[LARGO_BUFFER];
-} mensaje;
+#define ESPERA 500
+#define CANT_JUGADORES 6
 
 #endif

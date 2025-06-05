@@ -4,11 +4,11 @@
 void* thread_jugador(void* arg);
 
 typedef struct {
-    int numero_pensado_pensador;
-    int* alguien_acerto;
-    int numero_pensado_jugador;
-    int id_jugador;
-    int intentos;
+    int id;
+    int numero_ruleta;
+    int *vector_tambor;
+    int vivo;
 } ThreadArgs;
 
 #endif
+

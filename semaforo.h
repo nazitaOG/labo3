@@ -3,7 +3,7 @@
 
 void crearSemaforo();
 void iniciarSemaforo(int valor);
-void levantaSemaforo();
-void esperaSemaforo();
+void levantarSemaforo();
+void esperarSemaforo();
 
 #endif
