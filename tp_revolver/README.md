@@ -1,0 +1,1 @@
+Ejecutar el comando 'make all' y correr cualquiera de los dos procesos, el orden deberia ser indistinto.
